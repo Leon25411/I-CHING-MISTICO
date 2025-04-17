@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -13,91 +13,83 @@
       padding: 0;
     }
     .container {
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 20px;
+      max-width: 500px;
+      margin: 60px auto;
+      padding: 25px;
       background: #111;
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+      border-radius: 20px;
+      text-align: center;
     }
     h1 {
-      text-align: center;
-      font-size: 2em;
       color: #FF4500;
       margin-bottom: 10px;
+      font-size: 2em;
+    }
+    p {
+      font-size: 1.1em;
+      margin-bottom: 30px;
+      color: #FFD700;
     }
     input, button {
       width: 100%;
       padding: 12px;
-      margin: 10px 0;
+      margin-bottom: 15px;
       border-radius: 10px;
-      font-size: 1em;
       border: 1px solid #FFD700;
       background: #222;
       color: #FFD700;
+      font-size: 1em;
     }
     button {
-      background-color: #FF0000;
+      background: #FF0000;
       color: white;
       border: none;
       cursor: pointer;
     }
     button:hover {
-      background-color: #cc0000;
+      background: #cc0000;
     }
     .result {
-      margin-top: 20px;
-      padding: 15px;
       background: #1a1a1a;
-      border: 1px solid #FFD700;
+      padding: 15px;
       border-radius: 10px;
-      color: #FFD700;
-    }
-    .pay-share {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      border: 1px solid #FFD700;
       margin-top: 20px;
     }
-    .pay-share a {
-      text-decoration: none;
+    .boton-pago {
+      display: block;
       background: #FFD700;
       color: #000;
-      padding: 10px;
+      text-decoration: none;
+      padding: 12px;
       border-radius: 10px;
-      text-align: center;
-      flex: 1 1 45%;
+      margin-top: 20px;
       font-weight: bold;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Descubre tu mensaje del I Ching</h1>
-    <input type="date" id="birthdate" />
-    <button onclick="generarMensaje()">Consultar</button>
+    <h1>Tu destino quiere hablarte</h1>
+    <p>Ingresá tu fecha de nacimiento y recibí gratis una señal del I Ching.  
+    ¿Te animás a escuchar lo que el universo quiere decirte?</p>
+
+    <input type="date" id="birthdate">
+    <button onclick="generarMensaje()">Consultar Gratis</button>
+
     <div class="result" id="resultado"></div>
-    <div class="pay-share">
-      <a href="https://mpago.li/1uJHm3s" target="_blank">Pagar $990</a>
-      <a href="#" onclick="compartirWhatsapp()">WhatsApp</a>
-      <a href="#" onclick="compartirFacebook()">Facebook</a>
-    </div>
+
+    <a class="boton-pago" href="https://mpago.li/1uJHm3s" target="_blank">Desbloquear mensaje completo por $800</a>
   </div>
+
   <script>
     const hexagramas = [
-      "Hoy se abre un portal para tu alma. El universo te dice: confía. Lo que buscas, también te está buscando.",
-      "Tu corazón guarda la verdad. Alinea tus acciones con tu esencia, y el amor florecerá.",
-      "El cambio llega. No temas lo desconocido: es la puerta que te guía a tu destino.",
-      "El silencio tiene respuestas. Escucha lo que el universo susurra en tu intuición.",
-      "Una decisión te transformará. No busques fuera, lo que solo vos podés resolver."
-    ];
-
-    const horoscopo = [
-      "Hoy sentís más intensamente que nunca. Ideal para conectar con alguien especial.",
-      "Tu energía está magnética. Usala para atraer lo que deseás.",
-      "Un encuentro inesperado puede cambiar tu semana.",
-      "Refugiate en tu mundo interior, ahí está la claridad que buscás.",
-      "Hoy arranca tu nueva vida. Cree en vos, todo lo demás fluye."
+      "Un ciclo se cierra, y otro se abre. El universo te está preparando para algo grande.",
+      "Estás más cerca de lo que pensás. No abandones ahora, la recompensa se manifiesta.",
+      "Tu intuición es poderosa: confiá en ella. Las respuestas llegan en silencio.",
+      "Una energía nueva te envuelve. Abrazá lo que llega sin miedo.",
+      "El amor que esperás ya te está pensando. Pero primero: reencontrate con vos."
     ];
 
     function generarMensaje() {
@@ -107,32 +99,14 @@
         return;
       }
       const hash = fecha.split('-').join('');
-      const indexHex = parseInt(hash.slice(-2)) % hexagramas.length;
-      const indexHor = parseInt(hash.slice(-3)) % horoscopo.length;
+      const index = parseInt(hash.slice(-2)) % hexagramas.length;
 
-      const mensajeGratis = `<strong>Mensaje I Ching:</strong><br>${hexagramas[indexHex]}<br><br><strong>Mensaje de tu horóscopo:</strong><br>${horoscopo[indexHor]}<br><br><em>¿Querés desbloquear tu guía completa?</em><br><strong>Una visión más profunda te espera... después del pago.</strong>`;
-      document.getElementById('resultado').innerHTML = mensajeGratis;
-    }
-
-    function compartirWhatsapp() {
-      const mensaje = document.getElementById('resultado').innerText;
-      if (!mensaje) {
-        alert('Primero generá tu mensaje.');
-        return;
-      }
-      const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
-      window.open(url, '_blank');
-    }
-
-    function compartirFacebook() {
-      const mensaje = document.getElementById('resultado').innerText;
-      if (!mensaje) {
-        alert('Primero generá tu mensaje.');
-        return;
-      }
-      const url = `https://www.facebook.com/sharer/sharer.php?u=https://tu-pagina.com&quote=${encodeURIComponent(mensaje)}`;
-      window.open(url, '_blank');
+      const mensaje = `
+        <strong>Tu señal del I Ching:</strong><br>${hexagramas[index]}<br><br>
+        <em>¿Querés conocer tu revelación completa? Tu guía emocional, tu respuesta interior y el mensaje profundo te esperan...</em>
+      `;
+      document.getElementById('resultado').innerHTML = mensaje;
     }
   </script>
 </body>
-</html>
+</html> 
