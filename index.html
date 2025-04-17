@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I Ching Místico</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #f8f8ff;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 15px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1em;
+    }
+    button {
+      background-color: #6a5acd;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #483d8b;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f0f0ff;
+      border-radius: 10px;
+    }
+    .pay-share {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .pay-share a {
+      text-decoration: none;
+      background: #ff69b4;
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      flex: 1 1 45%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Descubrí tu mensaje del I Ching</h1>
+    <input type="date" id="birthdate" />
+    <button onclick="generarMensaje()">Consultar</button>
+    <div class="result" id="resultado"></div>
+
+    <div id="premium" style="display: none;" class="result">
+      <h2 style="text-align:center;">Vista previa de tu Guía Mística</h2>
+      <p>
+        “Sentís que algo te llama desde lo profundo… Hoy no fue un día cualquiera. 
+        El universo eligió este instante para hablarte, para darte una señal...”
+        <br><br>
+        <em>El mensaje completo lo recibirás al instante por email.</em><br>
+        <strong>Adquirilo ahora y abrí la puerta a tu destino.</strong>
+      </p>
+    </div>
+
+    <div class="pay-share">
+      <a href="https://www.mercadopago.com.ar/checkout" target="_blank">Pagar</a>
+      <a href="#" onclick="compartirWhatsapp()">WhatsApp</a>
+      <a href="#" onclick="compartirFacebook()">Facebook</a>
+    </div>
+  </div>
+
+  <script>
+    const hexagramas = [
+      "Hoy se abre un portal para tu alma. El universo te dice: confía. Lo que buscás, también te está buscando.",
+      "Tu corazón guarda la verdad. Alineá tus acciones con tu esencia, y el amor florecerá.",
+      "El cambio llega. No temas lo desconocido: es la puerta que te guía a tu destino.",
+      "El silencio tiene respuestas. Escuchá lo que el universo susurra en tu intuición.",
+      "Una decisión te transformará. No busques fuera, lo que solo vos podés resolver."
+    ];
+
+    const horoscopo = [
+      "Hoy sentís más intensamente que nunca. Ideal para conectar con alguien especial.",
+      "Tu energía está magnética. Usala para atraer lo que deseás.",
+      "Un encuentro inesperado puede cambiar tu semana.",
+      "Refugiate en tu mundo interior, ahí está la claridad que buscás.",
+      "Hoy arranca tu nueva vida. Creé en vos, todo lo demás fluye."
+    ];
+
+    function generarMensaje() {
+      const fecha = document.getElementById('birthdate').value;
+      if (!fecha) {
+        alert('Por favor, ingresá tu fecha de nacimiento');
+        return;
+      }
+      const hash = fecha.split('-').join('');
+      const indexHex = parseInt(hash.slice(-2)) % hexagramas.length;
+      const indexHor = parseInt(hash.slice(-3)) % horoscopo.length;
+
+      const mensaje = `<strong>Mensaje I Ching:</strong><br>${hexagramas[indexHex]}<br><br><strong>Mensaje de tu horóscopo:</strong><br>${horoscopo[indexHor]}`;
+      document.getElementById('resultado').innerHTML = mensaje;
+
+      // Mostrar la vista previa del contenido premium
+      document.getElementById('premium').style.display = 'block';
+    }
+
+    function compartirWhatsapp() {
+      const mensaje = document.getElementById('resultado').innerText;
+      if (!mensaje) {
+        alert('Primero generá tu mensaje.');
+        return;
+      }
+      const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, '_blank');
+    }
+
+    function compartirFacebook() {
+      const mensaje = document.getElementById('resultado').innerText;
+      if (!mensaje) {
+        alert('Primero generá tu mensaje.');
+        return;
+      }
+      const url = `https://www.facebook.com/sharer/sharer.php?u=https://tu-pagina.com&quote=${encodeURIComponent(mensaje)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
