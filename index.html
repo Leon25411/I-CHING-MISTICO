@@ -3,109 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>I Ching Místico</title>
+  <title>HOMBRE CLÁSICO</title>
   <style>
     body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
       background-color: #000;
-      color: gold;
-      font-family: 'Georgia', serif;
+      color: #fff;
+    }
+
+    header {
+      background-color: #111;
       padding: 20px;
       text-align: center;
     }
-    .frase-inicial {
-      font-size: 1.5em;
-      margin-bottom: 20px;
-      color: red;
+
+    header h1 {
+      color: white;
+      font-size: 28px;
+      letter-spacing: 2px;
     }
-    input, button {
-      padding: 10px;
-      font-size: 1em;
-      margin: 10px;
-      border-radius: 10px;
-      border: none;
-    }
-    #respuesta {
-      border: 2px solid gold;
+
+    .producto {
       padding: 20px;
-      margin-top: 20px;
       background-color: #111;
-      color: #f2f2f2;
+      border-bottom: 2px solid #222;
+    }
+
+    .producto img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 10px;
+    }
+
+    .producto h2 {
+      font-size: 24px;
+      color: #0f0;
+    }
+
+    .producto p {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+    }
+
+    .boton-compra {
+      background-color: #00c853;
+      color: #000;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 25px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .regalos {
+      background-color: #222;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .regalos h3 {
+      color: #0f0;
+      font-size: 22px;
+    }
+
+    .regalos ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .regalos li::before {
+      content: "✔️ ";
+      color: #0f0;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 14px;
+      padding: 15px;
+      background-color: #111;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>HOMBRE CLÁSICO</h1>
+  </header>
 
-  <div class="frase-inicial" id="fraseInicio">Cargando sabiduría...</div>
+  <section class="producto">
+    <h2>Cinturón de Cuero</h2>
+    <img src="https://i.imgur.com/qRxyuIL.jpg" alt="Cinturón de cuero">
+    <p>
+      Este <strong>cinturón de cuero</strong> es para el hombre que no acepta cualquier porquería y siempre quiere lo mejor.
+      Hecho en cuero legítimo, <strong>resistente y duradero</strong>, es la verdadera marca del hombre de campo.
+      ¡Una pieza que vale la pena tener en el guardarropa!
+    </p>
+    <ul>
+      <li>Diseño elegante</li>
+      <li>Alta calidad</li>
+      <li>Único y auténtico</li>
+      <li>Ajuste perfecto</li>
+    </ul>
 
-  <input type="email" id="email" placeholder="Tu correo electrónico" required><br>
-  <input type="date" id="fechaNacimiento"><br>
-  <button onclick="consultarIChing()">Consultar el I Ching</button>
+    <!-- BOTÓN DE MERCADO PAGO con ID de preferencia ya listo -->
+    <form action="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=1437138276-64a2f312-0d80-4a01-9f30-625c6bdfe41e" method="GET" target="_blank">
+      <button class="boton-compra">COMPRAR AHORA</button>
+    </form>
+  </section>
 
-  <div id="respuesta"></div>
+  <section class="regalos">
+    <h3>¡Comprando hoy, te llevás REGALOS!</h3>
+    <ul>
+      <li>Cinturón de cuero</li>
+      <li>Billetera de cuero</li>
+      <li>Reloj de cuarzo</li>
+    </ul>
+  </section>
 
-  <script>
-    // Frases místicas para mostrar al inicio
-    const frases = [
-      "Hoy es el comienzo de una transformación profunda.",
-      "Tu energía está alineada con el universo.",
-      "Hay una respuesta esperando por ti.",
-      "El destino se revela en silencio.",
-      "Todo lo que buscas también te está buscando.",
-      "La claridad llega cuando la mente se aquieta.",
-      "Un cambio importante está en el aire."
-    ];
-
-    // Obtener la IP del visitante y mostrar una frase según eso
-    fetch('https://api.ipify.org?format=json')
-      .then(res => res.json())
-      .then(data => {
-        const ip = data.ip;
-        const ultimoNumero = parseInt(ip.split('.').pop());
-        const frase = frases[ultimoNumero % frases.length];
-        document.getElementById('fraseInicio').innerText = frase;
-      });
-
-    function consultarIChing() {
-      const email = document.getElementById('email').value;
-      const fecha = document.getElementById('fechaNacimiento').value;
-
-      if (!email || !fecha) {
-        alert("Por favor completá tu correo y fecha de nacimiento.");
-        return;
-      }
-
-      const hexagramas = [
-        "Hexagrama 1 - El Creador: Estás por iniciar un camino poderoso.",
-        "Hexagrama 2 - Lo Receptivo: Escuchá tu intuición, hoy más que nunca.",
-        "Hexagrama 3 - Dificultad Inicial: Todo gran viaje comienza con caos.",
-        "Hexagrama 4 - La Juventud: Aprendé con humildad, el universo te enseña.",
-        "Hexagrama 5 - Espera: No corras, el momento perfecto se acerca.",
-        "Hexagrama 6 - Conflicto: La armonía nace de la comprensión.",
-        "Hexagrama 7 - El Ejército: Unificá tus fuerzas internas.",
-        "Hexagrama 8 - Solidaridad: Encontrarás aliados verdaderos."
-      ];
-
-      const index = Math.floor(Math.random() * hexagramas.length);
-      const mensaje = hexagramas[index];
-
-      // Mensaje extra tipo horóscopo según el mes
-      const mes = new Date(fecha).getMonth();
-      const horoscopo = [
-        "Hoy el amor toca tu puerta.",
-        "Se avecina una oportunidad inesperada.",
-        "Tu energía conquista todo a tu paso.",
-        "Cuidado con decisiones impulsivas, pensá con el corazón.",
-        "Una verdad se revelará si estás atento.",
-        "El universo quiere que confíes más en vos."
-      ];
-
-      const mensajeHoroscopo = horoscopo[mes % horoscopo.length];
-
-      document.getElementById('respuesta').innerHTML = `
-        <p><strong>${mensaje}</strong></p>
-        <p>${mensajeHoroscopo}</p>
-      `;
-    }
-  </script>
+  <footer>
+    &copy; 2025 Hombre Clásico. Todos los derechos reservados.
+  </footer>
 </body>
-</html> 
+</html>
