@@ -1,111 +1,110 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>I Ching Místico</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background: #000;
-      color: #FFD700;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 500px;
-      margin: 60px auto;
-      padding: 25px;
-      background: #111;
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-      border-radius: 20px;
+      background-color: #000;
+      color: gold;
+      font-family: 'Georgia', serif;
+      padding: 20px;
       text-align: center;
     }
-    h1 {
-      color: #FF4500;
-      margin-bottom: 10px;
-      font-size: 2em;
-    }
-    p {
-      font-size: 1.1em;
-      margin-bottom: 30px;
-      color: #FFD700;
+    .frase-inicial {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      color: red;
     }
     input, button {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border-radius: 10px;
-      border: 1px solid #FFD700;
-      background: #222;
-      color: #FFD700;
+      padding: 10px;
       font-size: 1em;
-    }
-    button {
-      background: #FF0000;
-      color: white;
+      margin: 10px;
+      border-radius: 10px;
       border: none;
-      cursor: pointer;
     }
-    button:hover {
-      background: #cc0000;
-    }
-    .result {
-      background: #1a1a1a;
-      padding: 15px;
-      border-radius: 10px;
-      border: 1px solid #FFD700;
+    #respuesta {
+      border: 2px solid gold;
+      padding: 20px;
       margin-top: 20px;
-    }
-    .boton-pago {
-      display: block;
-      background: #FFD700;
-      color: #000;
-      text-decoration: none;
-      padding: 12px;
-      border-radius: 10px;
-      margin-top: 20px;
-      font-weight: bold;
+      background-color: #111;
+      color: #f2f2f2;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Tu destino quiere hablarte</h1>
-    <p>Ingresá tu fecha de nacimiento y recibí gratis una señal del I Ching.  
-    ¿Te animás a escuchar lo que el universo quiere decirte?</p>
 
-    <input type="date" id="birthdate">
-    <button onclick="generarMensaje()">Consultar Gratis</button>
+  <div class="frase-inicial" id="fraseInicio">Cargando sabiduría...</div>
 
-    <div class="result" id="resultado"></div>
+  <input type="email" id="email" placeholder="Tu correo electrónico" required><br>
+  <input type="date" id="fechaNacimiento"><br>
+  <button onclick="consultarIChing()">Consultar el I Ching</button>
 
-    <a class="boton-pago" href="https://mpago.li/1uJHm3s" target="_blank">Desbloquear mensaje completo por $800</a>
-  </div>
+  <div id="respuesta"></div>
 
   <script>
-    const hexagramas = [
-      "Un ciclo se cierra, y otro se abre. El universo te está preparando para algo grande.",
-      "Estás más cerca de lo que pensás. No abandones ahora, la recompensa se manifiesta.",
-      "Tu intuición es poderosa: confiá en ella. Las respuestas llegan en silencio.",
-      "Una energía nueva te envuelve. Abrazá lo que llega sin miedo.",
-      "El amor que esperás ya te está pensando. Pero primero: reencontrate con vos."
+    // Frases místicas para mostrar al inicio
+    const frases = [
+      "Hoy es el comienzo de una transformación profunda.",
+      "Tu energía está alineada con el universo.",
+      "Hay una respuesta esperando por ti.",
+      "El destino se revela en silencio.",
+      "Todo lo que buscas también te está buscando.",
+      "La claridad llega cuando la mente se aquieta.",
+      "Un cambio importante está en el aire."
     ];
 
-    function generarMensaje() {
-      const fecha = document.getElementById('birthdate').value;
-      if (!fecha) {
-        alert('Por favor, ingresá tu fecha de nacimiento');
+    // Obtener la IP del visitante y mostrar una frase según eso
+    fetch('https://api.ipify.org?format=json')
+      .then(res => res.json())
+      .then(data => {
+        const ip = data.ip;
+        const ultimoNumero = parseInt(ip.split('.').pop());
+        const frase = frases[ultimoNumero % frases.length];
+        document.getElementById('fraseInicio').innerText = frase;
+      });
+
+    function consultarIChing() {
+      const email = document.getElementById('email').value;
+      const fecha = document.getElementById('fechaNacimiento').value;
+
+      if (!email || !fecha) {
+        alert("Por favor completá tu correo y fecha de nacimiento.");
         return;
       }
-      const hash = fecha.split('-').join('');
-      const index = parseInt(hash.slice(-2)) % hexagramas.length;
 
-      const mensaje = `
-        <strong>Tu señal del I Ching:</strong><br>${hexagramas[index]}<br><br>
-        <em>¿Querés conocer tu revelación completa? Tu guía emocional, tu respuesta interior y el mensaje profundo te esperan...</em>
+      const hexagramas = [
+        "Hexagrama 1 - El Creador: Estás por iniciar un camino poderoso.",
+        "Hexagrama 2 - Lo Receptivo: Escuchá tu intuición, hoy más que nunca.",
+        "Hexagrama 3 - Dificultad Inicial: Todo gran viaje comienza con caos.",
+        "Hexagrama 4 - La Juventud: Aprendé con humildad, el universo te enseña.",
+        "Hexagrama 5 - Espera: No corras, el momento perfecto se acerca.",
+        "Hexagrama 6 - Conflicto: La armonía nace de la comprensión.",
+        "Hexagrama 7 - El Ejército: Unificá tus fuerzas internas.",
+        "Hexagrama 8 - Solidaridad: Encontrarás aliados verdaderos."
+      ];
+
+      const index = Math.floor(Math.random() * hexagramas.length);
+      const mensaje = hexagramas[index];
+
+      // Mensaje extra tipo horóscopo según el mes
+      const mes = new Date(fecha).getMonth();
+      const horoscopo = [
+        "Hoy el amor toca tu puerta.",
+        "Se avecina una oportunidad inesperada.",
+        "Tu energía conquista todo a tu paso.",
+        "Cuidado con decisiones impulsivas, pensá con el corazón.",
+        "Una verdad se revelará si estás atento.",
+        "El universo quiere que confíes más en vos."
+      ];
+
+      const mensajeHoroscopo = horoscopo[mes % horoscopo.length];
+
+      document.getElementById('respuesta').innerHTML = `
+        <p><strong>${mensaje}</strong></p>
+        <p>${mensajeHoroscopo}</p>
       `;
-      document.getElementById('resultado').innerHTML = mensaje;
     }
   </script>
 </body>
